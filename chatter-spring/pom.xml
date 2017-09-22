@@ -9,11 +9,26 @@
 	<artifactId>chatter-spring</artifactId>
 	<name>ChatterSpring</name>
 
+	<properties>
+		<spring.version>4.3.11.RELEASE</spring.version>
+		<aspectj.version>1.8.10</aspectj.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.3.11.RELEASE</version>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
 		</dependency>
 	</dependencies>
 </project>
