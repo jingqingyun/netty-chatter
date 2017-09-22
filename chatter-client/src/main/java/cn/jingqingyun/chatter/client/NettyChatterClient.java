@@ -19,6 +19,10 @@ public class NettyChatterClient {
     private static final int REMOTE_PORT = 8888;
 
     public static void main(String[] args) {
+        serve();
+    }
+
+    private static void serve() {
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(group).channel(NioSocketChannel.class).remoteAddress(REMOTE_ADDR, REMOTE_PORT)

@@ -18,7 +18,7 @@ public class NettyChatterClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println(msg);
+        System.out.println(String.format("%s: %s", ctx.channel().remoteAddress(), msg));
     }
 
 }
