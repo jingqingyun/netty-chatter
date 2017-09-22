@@ -5,6 +5,6 @@
     <artifactId>netty-chatter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>chatter-mybatis</artifactId>
-  <name>ChatterMybatis</name>
+  <artifactId>chatter-service</artifactId>
+  <name>ChatterService</name>
 </project>

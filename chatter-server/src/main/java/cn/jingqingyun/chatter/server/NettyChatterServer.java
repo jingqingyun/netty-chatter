@@ -1,11 +1,7 @@
 package cn.jingqingyun.chatter.server;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -20,15 +16,7 @@ import io.netty.handler.codec.string.StringEncoder;
 
 public class NettyChatterServer {
     public static final int DEFAULT_PORT = 8888;
-    private static final Logger logger = Logger.getLogger(NettyChatterServer.class);
-    static {
-        try {
-            PropertyConfigurator.configure(new FileInputStream(new File("src/main/resources/log4j.properties")));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
+    private static final Logger logger = LogManager.getLogger();
     private int port = DEFAULT_PORT;
 
     public static void main(String[] args) {

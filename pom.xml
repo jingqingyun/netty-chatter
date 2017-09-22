@@ -1,15 +1,30 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>cn.jingqingyun</groupId>
-  <artifactId>netty-chatter</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <name>NettyChatter</name>
-  <modules>
-  	<module>chatter-server</module>
-  	<module>chatter-client</module>
-  	<module>chatter-redis</module>
-  	<module>chatter-mybatis</module>
-  	<module>chatter-spring</module>
-  </modules>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cn.jingqingyun</groupId>
+	<artifactId>netty-chatter</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>NettyChatter</name>
+	<modules>
+		<module>chatter-server</module>
+		<module>chatter-client</module>
+		<module>chatter-redis</module>
+		<module>chatter-mybatis</module>
+		<module>chatter-spring</module>
+		<module>chatter-service</module>
+	</modules>
+	
+	<properties>
+		<log4j.version>2.8.2</log4j.version>
+	</properties>
+
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+	</dependencies>
 </project>
