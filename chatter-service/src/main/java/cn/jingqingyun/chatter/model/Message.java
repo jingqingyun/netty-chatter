@@ -4,9 +4,10 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Message {
+    private Long id;
     private UUID uuid;
-    private String to;
     private String from;
+    private String to;
     private String content;
     private Date sendTime;
 
@@ -27,6 +28,10 @@ public class Message {
         return from;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Date getSendTime() {
         return sendTime;
     }
@@ -37,6 +42,30 @@ public class Message {
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setSendTime(Date sendTime) {
+        this.sendTime = sendTime;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
 }
