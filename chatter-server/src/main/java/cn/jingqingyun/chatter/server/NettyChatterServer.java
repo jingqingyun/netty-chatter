@@ -19,22 +19,15 @@ public class NettyChatterServer {
     private static final Logger logger = LogManager.getLogger();
     private int port = DEFAULT_PORT;
 
-    public static void main(String[] args) {
-        NettyChatterServer server = new NettyChatterServer();
-        if (args.length > 0) {
-            server.setPort(Integer.valueOf(args[0]));
-        }
-        server.serve();
-    }
+    private EventLoopGroup bossGroup;
+    private EventLoopGroup workerGroup;
+    private ServerBootstrap serverBootstrap;
+    private ChannelFuture future;
 
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    private void serve() {
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
-        ServerBootstrap serverBootstrap = new ServerBootstrap();
+    public NettyChatterServer() {
+        bossGroup = new NioEventLoopGroup();
+        workerGroup = new NioEventLoopGroup();
+        serverBootstrap = new ServerBootstrap();
         serverBootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).localAddress(port)
                 .childHandler(new ChannelInitializer<Channel>() {
 
@@ -45,18 +38,40 @@ public class NettyChatterServer {
                     }
 
                 }).option(ChannelOption.SO_BACKLOG, 128).childOption(ChannelOption.SO_KEEPALIVE, true);
+    }
 
+    public static void main(String[] args) {
+        NettyChatterServer server = new NettyChatterServer();
+        if (args.length > 0) {
+            server.setPort(Integer.valueOf(args[0]));
+        }
+        server.serve();
+    }
+
+    public void serve() {
         try {
-            ChannelFuture future = serverBootstrap.bind().sync();
-            logger.info("NettyChatter server started.");
+            future = serverBootstrap.bind().sync();
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+        logger.info("NettyChatter server started.");
+
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public void stop() {
+        try {
             future.channel().closeFuture().sync();
-            logger.info("NettyChatter server closed.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
+        logger.info("NettyChatter server closed.");
     }
 
 }
