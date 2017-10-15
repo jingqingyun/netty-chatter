@@ -30,7 +30,7 @@ public class NettyChatterClient {
 
     public NettyChatterClient() {
         group = new NioEventLoopGroup();
-        Bootstrap bootstrap = new Bootstrap();
+        bootstrap = new Bootstrap();
         msgQueue = new ArrayBlockingQueue<>(DEFAULT_MAX_SIZE);
 
         bootstrap.group(group).channel(NioSocketChannel.class).remoteAddress(REMOTE_ADDR, REMOTE_PORT)
@@ -47,11 +47,21 @@ public class NettyChatterClient {
 
     public static void main(String[] args) {
         NettyChatterClient client = new NettyChatterClient();
-        client.serve();
+        try {
+            client.serve();
+        } finally {
+            client.stop();
+        }
     }
 
     public Message getMessage() {
-        return null;
+        Message msg = null;
+        try {
+            msg = msgQueue.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return msg;
     }
 
     public void sendMsg(String msg) {

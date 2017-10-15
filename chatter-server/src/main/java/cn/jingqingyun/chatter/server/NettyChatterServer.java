@@ -17,14 +17,15 @@ import io.netty.handler.codec.string.StringEncoder;
 public class NettyChatterServer {
     public static final int DEFAULT_PORT = 8888;
     private static final Logger logger = LogManager.getLogger();
-    private int port = DEFAULT_PORT;
+    private volatile static NettyChatterServer instance;
 
+    private int port = DEFAULT_PORT;
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
     private ServerBootstrap serverBootstrap;
     private ChannelFuture future;
 
-    public NettyChatterServer() {
+    private NettyChatterServer() {
         bossGroup = new NioEventLoopGroup();
         workerGroup = new NioEventLoopGroup();
         serverBootstrap = new ServerBootstrap();
@@ -40,12 +41,29 @@ public class NettyChatterServer {
                 }).option(ChannelOption.SO_BACKLOG, 128).childOption(ChannelOption.SO_KEEPALIVE, true);
     }
 
+    public static NettyChatterServer getInstance() {
+        if (instance == null) {
+            // 只有在实例为空时才需要实例化
+            synchronized (NettyChatterServer.class) {
+                // 通过同步保证实例化为院子操作
+                if (instance == null) {
+                    instance = new NettyChatterServer();
+                }
+            }
+        }
+        return instance;
+    }
+
     public static void main(String[] args) {
-        NettyChatterServer server = new NettyChatterServer();
+        NettyChatterServer server = NettyChatterServer.getInstance();
         if (args.length > 0) {
             server.setPort(Integer.valueOf(args[0]));
         }
-        server.serve();
+        try {
+            server.serve();
+        } finally {
+            server.stop();
+        }
     }
 
     public void serve() {
